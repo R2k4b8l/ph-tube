@@ -66,6 +66,44 @@ const loadCategoryVideos = (id) => {
             displayVideos(data.category)
         });
 }
+
+// loadVideoDetails
+
+const loadVideoDetails = (videoId) => {
+    // console.log(videoId);
+    const url = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`;
+    fetch(url)
+        .then((res) => res.json())
+        .then((data) => displayVideoDetails(data.video))
+
+}
+
+const displayVideoDetails = (video) => {
+    console.log(video);
+    document.getElementById('video_details').showModal();
+    const detailsContainer = document.getElementById("details-container");
+    detailsContainer.innerHTML = `<p class="py-4">${video.title} </p>
+
+<div class="card bg-base-100  shadow-sm">
+  <figure>
+    <img
+      src="${video.thumbnail}"
+      alt="img" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title"> Video Details </h2>
+    <p>${video.video_id}</p>
+  </div>
+</div>
+
+    `
+
+
+}
+
+
+
+
 const displayVideos = (videos) => {
 
     const videoContainer = document.getElementById('video-container');
@@ -104,13 +142,13 @@ const displayVideos = (videos) => {
                 </div>
                 <div class="intro">
                     <h2 class="text-sm font-semibold">${video.title}</h2>
-                    <p class=" text-sm text-gray-400 flex gap-2">Rakibul hasan <img class="w-5"
+                    <p class=" text-sm text-gray-400 flex gap-2"> ${video.authors[0].profile_name}<img class="w-5"
                             src="https://img.icons8.com/?size=100&id=D9RtvkuOe31p&format=png&color=000000" alt=""> </p>
 
                     <p class="text-sm text-gray-400 ">${video.others.views} views</p>
                 </div>
             </div>
-            <button class="btn btn-block"> Show Details </button>
+            <button onclick=loadVideoDetails('${video.video_id}') class="btn btn-block"> Show Details </button>
         </div>
 
      `
