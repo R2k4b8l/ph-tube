@@ -1,46 +1,93 @@
-// alert('all loaded')
 
-function loadCategories (){
+function removeActiveClass() {
+    const activeBtn = document.getElementsByClassName("active")
+    // console.log(activeBtn);
+    for (let btn of activeBtn) {
+        btn.classList.remove("active")
+        // console.log(btn);
+
+    }
+}
+
+
+
+// All Api fetch
+function loadCategories() {
     // Data fetch 
-   
+
     fetch('https://openapi.programming-hero.com/api/phero-tube/categories')
-    .then( (res => res.json()))
-    .then( (data => displayCategories(data.categories)))
-    
+        .then((res => res.json()))
+        .then((data => displayCategories(data.categories)))
+
 }
 
-function loadVideos(){
-    fetch ('https://openapi.programming-hero.com/api/phero-tube/videos')
-    .then( (res=> res.json() ))
-    .then( (data=> displayVideos(data.videos) ))
+function loadVideos() {
+    fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
+        .then((res => res.json()))
+        .then((data) => {
+            document.getElementById("btns-all").classList.add("active")
+            displayVideos(data.videos)
+
+        })
 }
 
-function displayCategories(categories){
+function displayCategories(categories) {
 
     const categoryContainer = document.getElementById('category-container');
-    
-    for ( let category of categories){
+
+    for (let category of categories) {
         console.log(category);
 
         // createElement
         const categoryDiv = document.createElement('div');
-        categoryDiv.innerHTML = `<button class="btn btn-sm hover:bg-red-700  hover:text-white">${category.category}</button>
+        categoryDiv.innerHTML = `<button id="btn-${category.category_id}" onclick="loadCategoryVideos(${category.category_id})"  class="btn btn-sm hover:bg-red-700  hover:text-white">${category.category}</button>
         `
-       categoryContainer.append(categoryDiv);
-       
-       
+        categoryContainer.append(categoryDiv);
+
+
     }
 }
 
-const displayVideos = (videos) =>{
-     
+
+const loadCategoryVideos = (id) => {
+
+    const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`
+
+    // console.log(url);
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+
+            removeActiveClass();
+            const clickButton = document.getElementById(`btn-${id}`);
+            // console.log(clickButton);
+            clickButton.classList.add("active");
+
+            displayVideos(data.category)
+        });
+}
+const displayVideos = (videos) => {
+
     const videoContainer = document.getElementById('video-container');
+    videoContainer.innerHTML = "";
+
+    if (videos.length == 0) {
+        videoContainer.innerHTML = `
+    <div class="col-span-full flex flex-col text-center items-center py-8">
+            <img class=" w-[160px]" src="img/Icon.png" alt="">
+
+            <h2 class="text-2xl font-bold  py-4">Oops!! Sorry, There is no content here  MR.Reday</h2>
+
+        </div>
+    `
+        return;
+    }
 
 
-   videos.forEach( (video) => {
-    
-    const videoCard = document.createElement('div');
-     videoCard.innerHTML = `  
+    videos.forEach((video) => {
+
+        const videoCard = document.createElement('div');
+        videoCard.innerHTML = `  
      <div class="card ">
             <figure class="relative">
                 <img class=" w-full h-[160px] object-cover" src="${video.thumbnail}" />
@@ -60,31 +107,18 @@ const displayVideos = (videos) =>{
                     <p class=" text-sm text-gray-400 flex gap-2">Rakibul hasan <img class="w-5"
                             src="https://img.icons8.com/?size=100&id=D9RtvkuOe31p&format=png&color=000000" alt=""> </p>
 
-                    <p class="text-sm text-gray-400 ">${video.others.views } views</p>
+                    <p class="text-sm text-gray-400 ">${video.others.views} views</p>
                 </div>
-
-
             </div>
+            <button class="btn btn-block"> Show Details </button>
         </div>
 
      `
+        videoContainer.append(videoCard);
 
-     videoContainer.append(videoCard);
-     
-
-
-    
-
-    
-   });
-    
-     
+    });
 
 
 }
 
-loadCategories();
-loadVideos();  
-
-
-alert("hello i'm here");
+loadCategories();  

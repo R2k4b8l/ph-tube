@@ -1,0 +1,25 @@
+.active{ 
+    background-color: brown;
+    color: azure;
+}
+
+
+
+
+
+
+
+
+/* 
+
+span.addEventListener('click', () => {
+                    //? Remove the "active-category" class from all spans
+                    const allSpan = category_items.getElementsByTagName('span')
+                    for (const span of allSpan) {
+                        span.classList.remove('active-category')
+                    }
+span.classList.add('active-category')
+
+                    selectedCategoryId = item.category_id
+                    fetchDataByCategories(selectedCategoryId)
+                }) */
