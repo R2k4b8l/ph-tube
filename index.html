@@ -18,9 +18,22 @@
         <nav class="flex  mx-auto justify-between  w-11/12 items-center border-b-2 py-3 ">
             <div class="logo w-[140px] "><img src="img/Logo.png" alt="Ph-Tube"> </div>
 
-            <div class="sort"><button class="btn">Sort By View</button> </div>
+            <div class="sort">
+                <button>
+                    <lab el class="input">
+                        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none"
+                                stroke="currentColor">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
+                            </g>
+                        </svg>
+                        <input id="srarch-input" type="search" required placeholder="Search" />
+                    </lab>
+                </button>
+            </div>
 
-            <div class="blogs "><button class="btn border-b-2 bg-red-700 text-white">Blogs</button> </div>
+            <div class="blogs "><button class="btn border-b-2 bg-red-700 text-white">Sort By View</button> </div>
 
 
         </nav>
@@ -33,6 +46,11 @@
         </div>
     </nav>
 
+
+    <section id="loader" class="text-center py-32 hidden">
+        <span class="loading loading-dots loading-xl"></span>
+
+    </section>
 
     <section id="video-container" class="w-11/12 mx-auto grid grid-cols-4 gap-4">
 
@@ -58,7 +76,7 @@
             <div class="modal-action">
                 <form method="dialog">
                     <!-- if there is a button in form, it will close the modal -->
-                    <button class="btn btn-sm bg-red-500 text-white">Close</button>
+                    <button class="btn btn-sm bg-red-500 text-white"> Close </button>
                 </form>
             </div>
         </div>
